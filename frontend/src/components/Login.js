@@ -47,7 +47,7 @@ function Login() {
 
       alert('Login Successful');
 
-      navigate('/');
+      navigate('/dashboard');
 
     } catch (error) {
 
@@ -86,6 +86,13 @@ function Login() {
         <button type="submit">
           Login
         </button>
+
+        <p style={{ marginTop: '15px' }}>
+          Don't have an account?{' '}
+          <a href="/register">
+            Register
+          </a>
+        </p>
 
       </form>
 
