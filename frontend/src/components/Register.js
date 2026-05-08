@@ -35,7 +35,7 @@ function Register() {
 
       await axios.post(
 
-        'http://localhost:5000/api/auth/register',
+        'https://auditissueagingtracker-1.onrender.com/api/auth/register',
 
         formData
 
