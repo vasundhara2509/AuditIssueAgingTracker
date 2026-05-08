@@ -22,14 +22,6 @@ function Dashboard() {
 
   const [issues, setIssues] = useState([]);
 
-  const [search, setSearch] = useState('');
-
-  const [priorityFilter, setPriorityFilter] =
-    useState('');
-
-  const [statusFilter, setStatusFilter] =
-    useState('');
-
   const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -126,24 +118,6 @@ function Dashboard() {
 
       await axios.delete(
         `${API_URL}/${id}`
-      );
-
-      fetchIssues();
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-  };
-
-  const updateStatus = async (id, status) => {
-
-    try {
-
-      await axios.put(
-        `${API_URL}/${id}`,
-        { status }
       );
 
       fetchIssues();
@@ -448,6 +422,106 @@ function Dashboard() {
           </BarChart>
 
         </div>
+
+      </div>
+
+      <div className="card">
+
+        <h2>Issue List</h2>
+
+        <table
+          border="1"
+          width="100%"
+          cellPadding="10"
+          style={{
+            marginTop: '20px',
+            borderCollapse: 'collapse'
+          }}
+        >
+
+          <thead>
+
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Department</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Assigned To</th>
+              <th>Due Date</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {
+              issues.map((issue) => (
+
+                <tr key={issue._id}>
+
+                  <td>{issue.title}</td>
+
+                  <td>{issue.description}</td>
+
+                  <td>{issue.department}</td>
+
+                  <td>{issue.priority}</td>
+
+                  <td>{issue.status}</td>
+
+                  <td>{issue.assignedTo}</td>
+
+                  <td>
+                    {
+                      issue.dueDate
+                        ? issue.dueDate.substring(0, 10)
+                        : ''
+                    }
+                  </td>
+
+                  <td>
+
+                    <button
+                      onClick={() => editIssue(issue)}
+                      style={{
+                        marginRight: '10px',
+                        backgroundColor: '#2563eb',
+                        color: 'white',
+                        border: 'none',
+                        padding: '5px 10px',
+                        borderRadius: '5px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => deleteIssue(issue._id)}
+                      style={{
+                        backgroundColor: 'red',
+                        color: 'white',
+                        border: 'none',
+                        padding: '5px 10px',
+                        borderRadius: '5px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Delete
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))
+            }
+
+          </tbody>
+
+        </table>
 
       </div>
 
