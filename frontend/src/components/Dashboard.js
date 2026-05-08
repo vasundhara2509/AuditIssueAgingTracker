@@ -18,7 +18,7 @@ import {
 function Dashboard() {
 
   const userInfo =
-    JSON.parse(localStorage.getItem('userInfo'));
+    JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   const [issues, setIssues] = useState([]);
 
