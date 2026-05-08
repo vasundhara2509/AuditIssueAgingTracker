@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
 import axios from 'axios';
-
 import { Navigate } from 'react-router-dom';
 
 import {
@@ -20,9 +18,7 @@ import {
 function Dashboard() {
 
   const userInfo =
-    JSON.parse(
-      localStorage.getItem('userInfo')
-    );
+    JSON.parse(localStorage.getItem('userInfo'));
 
   const [issues, setIssues] = useState([]);
 
@@ -46,6 +42,9 @@ function Dashboard() {
     dueDate: ''
   });
 
+  const API_URL =
+    'https://auditissueagingtracker-1.onrender.com/api/issues';
+
   useEffect(() => {
     fetchIssues();
   }, []);
@@ -54,9 +53,7 @@ function Dashboard() {
 
     try {
 
-      const response = await axios.get(
-        'http://localhost:5000/api/issues'
-      );
+      const response = await axios.get(API_URL);
 
       setIssues(response.data);
 
@@ -85,7 +82,7 @@ function Dashboard() {
       if (editId) {
 
         await axios.put(
-          `http://localhost:5000/api/issues/${editId}`,
+          `${API_URL}/${editId}`,
           formData
         );
 
@@ -96,7 +93,7 @@ function Dashboard() {
       } else {
 
         await axios.post(
-          'http://localhost:5000/api/issues/add',
+          API_URL,
           formData
         );
 
@@ -128,7 +125,7 @@ function Dashboard() {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/issues/${id}`
+        `${API_URL}/${id}`
       );
 
       fetchIssues();
@@ -145,7 +142,7 @@ function Dashboard() {
     try {
 
       await axios.put(
-        `http://localhost:5000/api/issues/${id}`,
+        `${API_URL}/${id}`,
         { status }
       );
 
@@ -189,28 +186,6 @@ function Dashboard() {
     return <Navigate to="/login" />;
 
   }
-
-  const filteredIssues = issues.filter((issue) => {
-
-    return (
-
-      issue.title
-        .toLowerCase()
-        .includes(search.toLowerCase())
-
-      &&
-
-      (priorityFilter === '' ||
-        issue.priority === priorityFilter)
-
-      &&
-
-      (statusFilter === '' ||
-        issue.status === statusFilter)
-
-    );
-
-  });
 
   const priorityData = [
     {
