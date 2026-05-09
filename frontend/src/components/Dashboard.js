@@ -18,7 +18,7 @@ import {
 function Dashboard() {
 
   const userInfo =
-    JSON.parse(localStorage.getItem('userInfo') || '{}');
+    JSON.parse(localStorage.getItem('userInfo'));
 
   const [issues, setIssues] = useState([]);
 
@@ -118,6 +118,24 @@ function Dashboard() {
 
       await axios.delete(
         `${API_URL}/${id}`
+      );
+
+      fetchIssues();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+  };
+
+  const updateStatus = async (id, status) => {
+
+    try {
+
+      await axios.put(
+        `${API_URL}/${id}`,
+        { status }
       );
 
       fetchIssues();
@@ -469,7 +487,33 @@ function Dashboard() {
 
                   <td>{issue.priority}</td>
 
-                  <td>{issue.status}</td>
+                  <td>
+
+                    <select
+                      value={issue.status}
+                      onChange={(e) =>
+                        updateStatus(
+                          issue._id,
+                          e.target.value
+                        )
+                      }
+                    >
+
+                      <option value="Open">
+                        Open
+                      </option>
+
+                      <option value="In Progress">
+                        In Progress
+                      </option>
+
+                      <option value="Closed">
+                        Closed
+                      </option>
+
+                    </select>
+
+                  </td>
 
                   <td>{issue.assignedTo}</td>
 
