@@ -80,8 +80,6 @@ function Dashboard() {
 
         alert('Issue Updated Successfully');
 
-        setEditId(null);
-
       } else {
 
         await axios.post(
@@ -104,6 +102,8 @@ function Dashboard() {
         assignedTo: '',
         dueDate: ''
       });
+
+      setEditId(null);
 
     } catch (error) {
 
@@ -529,29 +529,12 @@ function Dashboard() {
 
                     <button
                       onClick={() => editIssue(issue)}
-                      style={{
-                        marginRight: '10px',
-                        backgroundColor: '#2563eb',
-                        color: 'white',
-                        border: 'none',
-                        padding: '5px 10px',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                      }}
                     >
                       Edit
                     </button>
 
                     <button
                       onClick={() => deleteIssue(issue._id)}
-                      style={{
-                        backgroundColor: 'red',
-                        color: 'white',
-                        border: 'none',
-                        padding: '5px 10px',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                      }}
                     >
                       Delete
                     </button>
