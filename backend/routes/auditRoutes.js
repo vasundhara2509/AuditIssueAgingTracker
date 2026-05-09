@@ -2,37 +2,16 @@ const express = require('express');
 
 const router = express.Router();
 
-const AuditIssue = require('../models/AuditIssue');
-
-
-// ADD ISSUE
-router.post('/add', async (req, res) => {
-
-  try {
-
-    const issue = new AuditIssue(req.body);
-
-    await issue.save();
-
-    res.status(201).json(issue);
-
-  } catch (error) {
-
-    res.status(500).json({
-      message: error.message
-    });
-
-  }
-
-});
-
+const AuditIssue =
+require('../models/AuditIssue');
 
 // GET ALL ISSUES
 router.get('/', async (req, res) => {
 
   try {
 
-    const issues = await AuditIssue.find();
+    const issues =
+      await AuditIssue.find();
 
     res.json(issues);
 
@@ -46,6 +25,28 @@ router.get('/', async (req, res) => {
 
 });
 
+// ADD ISSUE
+router.post('/', async (req, res) => {
+
+  try {
+
+    const newIssue =
+      new AuditIssue(req.body);
+
+    const savedIssue =
+      await newIssue.save();
+
+    res.status(201).json(savedIssue);
+
+  } catch (error) {
+
+    res.status(400).json({
+      message: error.message
+    });
+
+  }
+
+});
 
 // UPDATE ISSUE
 router.put('/:id', async (req, res) => {
@@ -63,14 +64,13 @@ router.put('/:id', async (req, res) => {
 
   } catch (error) {
 
-    res.status(500).json({
+    res.status(400).json({
       message: error.message
     });
 
   }
 
 });
-
 
 // DELETE ISSUE
 router.delete('/:id', async (req, res) => {
@@ -82,7 +82,7 @@ router.delete('/:id', async (req, res) => {
     );
 
     res.json({
-      message: 'Issue Deleted Successfully'
+      message: 'Issue Deleted'
     });
 
   } catch (error) {
@@ -94,6 +94,5 @@ router.delete('/:id', async (req, res) => {
   }
 
 });
-
 
 module.exports = router;
